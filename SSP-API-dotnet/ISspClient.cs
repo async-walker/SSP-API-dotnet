@@ -1,6 +1,22 @@
-﻿namespace SSP_API_dotnet
+﻿using SSP_API.Types;
+
+namespace SSP_API
 {
+    /// <summary>
+    /// Интерфейс для взаимодействия с API
+    /// </summary>
     public interface ISspClient
     {
+        /// <summary>
+        /// Направление запроса на получение ССП
+        /// </summary>
+        /// <returns></returns>
+        Task<RequestResult> SendRequestAsync(RequestSspInfo request);
+        /// <summary>
+        /// Получение отчёта
+        /// </summary>
+        /// <param name="answerId">Идентификатор ответа</param>
+        /// <returns></returns>
+        Task<SspInfo> GetAnswerAsync(string answerId);
     }
 }
