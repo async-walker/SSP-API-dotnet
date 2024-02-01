@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SSP-API-dotnet": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "SspVersion": "1.0"
+      }
+    }
+  }
+}

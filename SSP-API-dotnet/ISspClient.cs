@@ -1,4 +1,4 @@
-﻿using SSP_API.Types;
+﻿using SSP_API.Types.Xsd;
 
 namespace SSP_API
 {
@@ -11,7 +11,7 @@ namespace SSP_API
         /// Направление запроса на получение ССП
         /// </summary>
         /// <returns></returns>
-        Task<RequestResult> SendRequestAsync(RequestSspInfo request);
+        Task<RequestResult> SendRequestAsync(SspRequest sspRequest);
         /// <summary>
         /// Получение отчёта
         /// </summary>

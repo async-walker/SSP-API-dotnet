@@ -1,6 +1,6 @@
 ﻿using RestSharp;
 using RestSharp.Authenticators;
-using SSP_API.Types;
+using SSP_API.Types.Xsd;
 
 namespace SSP_API
 {
@@ -23,7 +23,7 @@ namespace SSP_API
                     username: options.Credential.UserName,
                     password: options.Credential.Password),
                 ClientCertificates = options.ClientCertificates,
-                UserAgent = "SSP-API-dotnet/clientV1"
+                UserAgent = "SspClient"
             };
 
             _client = new RestClient(restOptions);
@@ -36,6 +36,7 @@ namespace SSP_API
             GC.SuppressFinalize(this);
         }
 
+        /// <inheritdoc/>
         public async Task<SspInfo> GetAnswerAsync(string answerId)
         {
             var request = new RestRequest("dlanswer", Method.Get)
@@ -46,7 +47,8 @@ namespace SSP_API
             return new SspInfo();
         }
 
-        public async Task<RequestResult> SendRequestAsync(RequestSspInfo sspRequest)
+        /// <inheritdoc/>
+        public async Task<RequestResult> SendRequestAsync(SspRequest sspRequest)
         {
             var request = new RestRequest("dlrequest", Method.Post)
                 .AddXmlBody(sspRequest);
