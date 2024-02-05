@@ -24,7 +24,24 @@ namespace SSP_API.Types.Xsd
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class FullName
     {
-        
+        private FullName() { }
+
+        /// <summary>
+        /// Инициализация <see cref="FullName"/>
+        /// </summary>
+        /// <param name="lastName">Фамилия</param>
+        /// <param name="name">Имя</param>
+        /// <param name="middleName">Отчество (при наличии)</param>
+        public FullName(
+            string lastName, 
+            string name, 
+            string middleName = default)
+        {
+            LastName = lastName;
+            Name = name;
+            MiddleName = middleName;
+        }
+
         /// <summary>
         /// <para>Фамилия</para>
         /// <para xml:lang="en">Minimum length: 1.</para>
@@ -259,7 +276,7 @@ namespace SSP_API.Types.Xsd
     }
     
     /// <summary>
-    /// <para>Документ, удостоверяющий личность</para>
+    /// <para>Документ, удостоверяющий личность индивидуального предпринимателя</para>
     /// </summary>
     [System.ComponentModel.DescriptionAttribute("Документ, удостоверяющий личность")]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "2.1.963.0")]
@@ -269,6 +286,35 @@ namespace SSP_API.Types.Xsd
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class EntrepreneurIdentityDocument
     {
+        private EntrepreneurIdentityDocument() { }
+
+        /// <summary>
+        /// Инициализация экзмепляра <see cref="EntrepreneurIdentityDocument"/>
+        /// </summary>
+        /// <param name="series">Серия</param>
+        /// <param name="number">Номер</param>
+        /// <param name="dateIssue">Дата выдачи</param>
+        /// <param name="authorityIssued">Наименование органа выдавшего ДУЛ</param>
+        /// <param name="departmentCode">Код подразделения</param>
+        /// <param name="documentType">Код ДУЛ</param>
+        /// <param name="nameOtherIdentityDocument">Наименование иного ДУЛ</param>
+        public EntrepreneurIdentityDocument(
+            string series,
+            string number,
+            DateOnly dateIssue,
+            string authorityIssued,
+            string departmentCode,
+            IdentityDocumentType documentType,
+            string nameOtherIdentityDocument = default)
+        {
+            Series = series;
+            Number = number;
+            DateIssue = dateIssue;
+            AuthorityIssuedIdentityDocument = authorityIssued;
+            DepartmentCode = departmentCode;
+            CodeIdentityDocument = documentType;
+            NameOtherIdentityDocument = nameOtherIdentityDocument;
+        }
         
         /// <summary>
         /// <para>Серия</para>
@@ -299,7 +345,7 @@ namespace SSP_API.Types.Xsd
         [System.ComponentModel.DescriptionAttribute("Дата выдачи")]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlElementAttribute("ДатаВыдачи", DataType="date")]
-        public System.DateTime DateIssue { get; set; }
+        public System.DateOnly DateIssue { get; set; }
         
         /// <summary>
         /// <para>Наименование органа выдавшего ДУЛ</para>
