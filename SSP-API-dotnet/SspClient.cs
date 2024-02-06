@@ -1,5 +1,6 @@
 ﻿using RestSharp;
 using RestSharp.Authenticators;
+using SSP_API.Extensions;
 using SSP_API.Types.Xsd;
 
 namespace SSP_API
@@ -40,11 +41,13 @@ namespace SSP_API
         public async Task<SspInfo> GetAnswerAsync(string answerId)
         {
             var request = new RestRequest("dlanswer", Method.Get)
-                .AddQueryParameter(name: "id", value: answerId);
+                .AddQueryParameter("id", answerId);
 
-            var response = await _client.ExecuteAsync(request);
+            var response = await _client.GetResponseAsync(request);
 
-            return new SspInfo();
+            var sspInfo = response.Content!.DeserializeXml<SspInfo>();
+
+            return sspInfo;
         }
 
         /// <inheritdoc/>
@@ -53,9 +56,11 @@ namespace SSP_API
             var request = new RestRequest("dlrequest", Method.Post)
                 .AddXmlBody(sspRequest);
 
-            var response = await _client.ExecuteAsync(request);
+            var response = await _client.GetResponseAsync(request);
 
-            return new RequestResult();
+            var requestResult = response.Content!.DeserializeXml<RequestResult>();
+
+            return requestResult;
         }
     }
 }
