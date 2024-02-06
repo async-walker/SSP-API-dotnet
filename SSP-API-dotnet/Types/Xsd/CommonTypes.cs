@@ -301,7 +301,7 @@ namespace SSP_API.Types.Xsd
         public EntrepreneurIdentityDocument(
             string series,
             string number,
-            DateOnly dateIssue,
+            DateTime dateIssue,
             string authorityIssued,
             string departmentCode,
             IdentityDocumentType documentType,
@@ -345,7 +345,7 @@ namespace SSP_API.Types.Xsd
         [System.ComponentModel.DescriptionAttribute("Дата выдачи")]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlElementAttribute("ДатаВыдачи", DataType="date")]
-        public System.DateOnly DateIssue { get; set; }
+        public System.DateTime DateIssue { get; set; }
         
         /// <summary>
         /// <para>Наименование органа выдавшего ДУЛ</para>
