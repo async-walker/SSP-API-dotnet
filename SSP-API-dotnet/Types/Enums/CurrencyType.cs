@@ -5,42 +5,35 @@ namespace SSP_API.Types.Enums
     /// <summary>
     /// Общероссийский классификатор валют
     /// </summary>
-    public enum OKV
+    public enum CurrencyType
     {
         /// <summary>
         /// Юань
         /// </summary>
-        [XmlEnum("156")]
-        CNY,
+        CNY = 156,
         /// <summary>
         /// Тенге
         /// </summary>
-        [XmlEnum("398")]
-        KZT,
+        KZT = 398,
         /// <summary>
         /// Сом
         /// </summary>
-        [XmlEnum("417")]
-        KGS,
+        KGS = 417,
         /// <summary>
         /// Российский рубль
         /// </summary>
-        [XmlEnum("643")] 
-        RUB,
+        RUB = 643,
         /// <summary>
         /// Доллар США
         /// </summary>
-        [XmlEnum("840")] 
-        USD,
+        USD = 840,
         /// <summary>
         /// Узбекский сум
         /// </summary>
-        [XmlEnum("860")] 
-        UZS,
+        UZS = 860,
         /// <summary>
         /// Евро
         /// </summary>
-        [XmlEnum("978")] 
-        EUR
+        EUR = 978
     }
 }
