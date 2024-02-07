@@ -1,6 +1,4 @@
-﻿using System.Xml.Serialization;
-
-namespace SSP_API.Types.Enums
+﻿namespace SSP_API.Types.Enums
 {
     /// <summary>
     /// Общероссийский классификатор валют
@@ -12,14 +10,6 @@ namespace SSP_API.Types.Enums
         /// </summary>
         CNY = 156,
         /// <summary>
-        /// Тенге
-        /// </summary>
-        KZT = 398,
-        /// <summary>
-        /// Сом
-        /// </summary>
-        KGS = 417,
-        /// <summary>
         /// Российский рубль
         /// </summary>
         RUB = 643,
@@ -27,10 +17,6 @@ namespace SSP_API.Types.Enums
         /// Доллар США
         /// </summary>
         USD = 840,
-        /// <summary>
-        /// Узбекский сум
-        /// </summary>
-        UZS = 860,
         /// <summary>
         /// Евро
         /// </summary>
