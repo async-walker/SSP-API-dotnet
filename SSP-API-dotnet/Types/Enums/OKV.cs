@@ -1,4 +1,6 @@
-﻿namespace SSP_API.Types.Enums
+﻿using System.Xml.Serialization;
+
+namespace SSP_API.Types.Enums
 {
     /// <summary>
     /// Общероссийский классификатор валют
@@ -6,28 +8,39 @@
     public enum OKV
     {
         /// <summary>
-        /// Российский рубль
+        /// Юань
         /// </summary>
-        RUB,
-        /// <summary>
-        /// Узбекский сум
-        /// </summary>
-        UZS,
-        /// <summary>
-        /// Евро
-        /// </summary>
-        EUR,
-        /// <summary>
-        /// Доллар США
-        /// </summary>
-        USD,
+        [XmlEnum("156")]
+        CNY,
         /// <summary>
         /// Тенге
         /// </summary>
+        [XmlEnum("398")]
         KZT,
         /// <summary>
         /// Сом
         /// </summary>
-        KGS
+        [XmlEnum("417")]
+        KGS,
+        /// <summary>
+        /// Российский рубль
+        /// </summary>
+        [XmlEnum("643")] 
+        RUB,
+        /// <summary>
+        /// Доллар США
+        /// </summary>
+        [XmlEnum("840")] 
+        USD,
+        /// <summary>
+        /// Узбекский сум
+        /// </summary>
+        [XmlEnum("860")] 
+        UZS,
+        /// <summary>
+        /// Евро
+        /// </summary>
+        [XmlEnum("978")] 
+        EUR
     }
 }
