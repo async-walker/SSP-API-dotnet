@@ -1742,10 +1742,11 @@ namespace SSP_API.Types.Xsd
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlElementAttribute("Источник")]
         public SourceInfoRequest Source { get; set; } = new();
-        
+
         /// <summary>
         /// <para>Сведения о субъекте кредитной истории</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Сведения о субъекте кредитной истории")]
         [System.ComponentModel.DescriptionAttribute("Сведения о субъекте кредитной истории")]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlElementAttribute("Субъект")]
