@@ -749,73 +749,83 @@ namespace SSP_API.Types.Xsd
     [System.Xml.Serialization.XmlTypeAttribute("ТипЦельКодЦели", Namespace="", AnonymousType=true)]
     public enum TargetCodeType
     {
-        
+
         /// <summary>
         /// <para>Потребительский заем (кредит) на приобретение автомобиля</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Потребительский заем (кредит) на приобретение автомобиля")]
         [System.ComponentModel.DescriptionAttribute("Потребительский заем (кредит) на приобретение автомобиля")]
         [System.Xml.Serialization.XmlEnumAttribute("1")]
         Item1,
-        
+
         /// <summary>
         /// <para>Потребительский микрозаем</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Потребительский микрозаем")]
         [System.ComponentModel.DescriptionAttribute("Потребительский микрозаем")]
         [System.Xml.Serialization.XmlEnumAttribute("2")]
         Item2,
-        
+
         /// <summary>
         /// <para>Потребительский заем (кредит) нецелевой</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Потребительский заем (кредит) нецелевой\"")]
         [System.ComponentModel.DescriptionAttribute("Потребительский заем (кредит) нецелевой")]
         [System.Xml.Serialization.XmlEnumAttribute("3")]
         Item3,
-        
+
         /// <summary>
         /// <para>Потребительский заем (кредит) с расходным лимитом (кредитная линия, овердрафт)</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Потребительский заем (кредит) с расходным лимитом (кредитная линия, овердрафт)")]
         [System.ComponentModel.DescriptionAttribute("Потребительский заем (кредит) с расходным лимитом (кредитная линия, овердрафт)")]
         [System.Xml.Serialization.XmlEnumAttribute("4")]
         Item4,
-        
+
         /// <summary>
         /// <para>Иной потребительский заем (кредит)</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Иной потребительский заем (кредит)")]
         [System.ComponentModel.DescriptionAttribute("Иной потребительский заем (кредит)")]
         [System.Xml.Serialization.XmlEnumAttribute("5")]
         Item5,
-        
+
         /// <summary>
         /// <para>Поручительство гражданина-потребителя</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Поручительство гражданина-потребителям")]
         [System.ComponentModel.DescriptionAttribute("Поручительство гражданина-потребителя")]
         [System.Xml.Serialization.XmlEnumAttribute("6")]
         Item6,
-        
+
         /// <summary>
         /// <para>Ипотека, предоставленная гражданином-потребителем</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Ипотека, предоставленная гражданином-потребителем")]
         [System.ComponentModel.DescriptionAttribute("Ипотека, предоставленная гражданином-потребителем")]
         [System.Xml.Serialization.XmlEnumAttribute("7")]
         Item7,
-        
+
         /// <summary>
         /// <para>Иной залог, предоставленный гражданином-потребителем</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Иной залог, предоставленный гражданином-потребителем")]
         [System.ComponentModel.DescriptionAttribute("Иной залог, предоставленный гражданином-потребителем")]
         [System.Xml.Serialization.XmlEnumAttribute("8")]
         Item8,
-        
+
         /// <summary>
         /// <para>Иной потребительский договор</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Иной потребительский договор")]
         [System.ComponentModel.DescriptionAttribute("Иной потребительский договор")]
         [System.Xml.Serialization.XmlEnumAttribute("9")]
         Item9,
-        
+
         /// <summary>
         /// <para>Заем (кредит) на развитие бизнеса</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Заем (кредит) на развитие бизнеса")]
         [System.ComponentModel.DescriptionAttribute("Заем (кредит) на развитие бизнеса")]
         [System.Xml.Serialization.XmlEnumAttribute("10")]
         Item10,
@@ -823,6 +833,7 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>Заем (кредит) на пополнение оборотных средств</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Заем (кредит) на пополнение оборотных средств")]
         [System.ComponentModel.DescriptionAttribute("Заем (кредит) на пополнение оборотных средств")]
         [System.Xml.Serialization.XmlEnumAttribute("11")]
         Item11,
@@ -830,6 +841,7 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>Заем (кредит) на покупку оборудования</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Заем (кредит) на покупку оборудования")]
         [System.ComponentModel.DescriptionAttribute("Заем (кредит) на покупку оборудования")]
         [System.Xml.Serialization.XmlEnumAttribute("12")]
         Item12,
@@ -837,6 +849,7 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>Заем (кредит) на строительство</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Заем (кредит) на строительство")]
         [System.ComponentModel.DescriptionAttribute("Заем (кредит) на строительство")]
         [System.Xml.Serialization.XmlEnumAttribute("13")]
         Item13,
@@ -844,6 +857,7 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>Заем (кредит) на приобретение ценных бумаг</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Заем (кредит) на приобретение ценных бумаг")]
         [System.ComponentModel.DescriptionAttribute("Заем (кредит) на приобретение ценных бумаг")]
         [System.Xml.Serialization.XmlEnumAttribute("14")]
         Item14,
@@ -851,6 +865,7 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>Иной заем (кредит)</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Иной заем (кредит)")]
         [System.ComponentModel.DescriptionAttribute("Иной заем (кредит)")]
         [System.Xml.Serialization.XmlEnumAttribute("15")]
         Item15,
@@ -858,6 +873,7 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>Лизинг</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Лизинг")]
         [System.ComponentModel.DescriptionAttribute("Лизинг")]
         [System.Xml.Serialization.XmlEnumAttribute("16")]
         Item16,
@@ -865,6 +881,7 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>Независимая гарантия</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Независимая гарантия")]
         [System.ComponentModel.DescriptionAttribute("Независимая гарантия")]
         [System.Xml.Serialization.XmlEnumAttribute("17")]
         Item17,
@@ -872,6 +889,7 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>Поручительство</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Поручительство")]
         [System.ComponentModel.DescriptionAttribute("Поручительство")]
         [System.Xml.Serialization.XmlEnumAttribute("18")]
         Item18,
@@ -879,6 +897,7 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>Страхование</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Страхование")]
         [System.ComponentModel.DescriptionAttribute("Страхование")]
         [System.Xml.Serialization.XmlEnumAttribute("19")]
         Item19,
@@ -886,6 +905,7 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>Ипотека</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Ипотека")]
         [System.ComponentModel.DescriptionAttribute("Ипотека")]
         [System.Xml.Serialization.XmlEnumAttribute("20")]
         Item20,
@@ -893,6 +913,7 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>Иной залог</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Иной залог")]
         [System.ComponentModel.DescriptionAttribute("Иной залог")]
         [System.Xml.Serialization.XmlEnumAttribute("21")]
         Item21,
@@ -900,6 +921,7 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>Иной договор</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Иной договор")]
         [System.ComponentModel.DescriptionAttribute("Иной договор")]
         [System.Xml.Serialization.XmlEnumAttribute("22")]
         Item22,
@@ -907,6 +929,7 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>Кредитный мониторинг в рамках действующего договора</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Кредитный мониторинг в рамках действующего договора")]
         [System.ComponentModel.DescriptionAttribute("Кредитный мониторинг в рамках действующего договора")]
         [System.Xml.Serialization.XmlEnumAttribute("23")]
         Item23,
@@ -914,6 +937,7 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>Прием на работу</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Прием на работу")]
         [System.ComponentModel.DescriptionAttribute("Прием на работу")]
         [System.Xml.Serialization.XmlEnumAttribute("24")]
         Item24,
@@ -921,27 +945,31 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>Маркетинговые исследования</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Маркетинговые исследования")]
         [System.ComponentModel.DescriptionAttribute("Маркетинговые исследования")]
         [System.Xml.Serialization.XmlEnumAttribute("25")]
         Item25,
-        
+
         /// <summary>
         /// <para>Научные исследования</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Научные исследования")]
         [System.ComponentModel.DescriptionAttribute("Научные исследования")]
         [System.Xml.Serialization.XmlEnumAttribute("26")]
         Item26,
-        
+
         /// <summary>
         /// <para>Контроль данных</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Контроль данных")]
         [System.ComponentModel.DescriptionAttribute("Контроль данных")]
         [System.Xml.Serialization.XmlEnumAttribute("27")]
         Item27,
-        
+
         /// <summary>
         /// <para>Иное</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Иное")]
         [System.ComponentModel.DescriptionAttribute("Иное")]
         [System.Xml.Serialization.XmlEnumAttribute("99")]
         Item99,
@@ -1338,8 +1366,7 @@ namespace SSP_API.Types.Xsd
         /// <para xml:lang="en">Minimum length: 1.</para>
         /// <para xml:lang="en">Maximum length: 255.</para>
         /// </summary>
-        [System.ComponentModel.DescriptionAttribute("Номер налогоплательщика, присвоенный уполномоченным органом иностранного государс" +
-            "тва, или его аналог")]
+        [System.ComponentModel.DescriptionAttribute("Номер налогоплательщика, присвоенный уполномоченным органом иностранного государства, или его аналог")]
         [System.ComponentModel.DataAnnotations.MinLengthAttribute(1)]
         [System.ComponentModel.DataAnnotations.MaxLengthAttribute(255)]
         [System.Xml.Serialization.XmlElementAttribute("НомерНП")]
@@ -1351,8 +1378,7 @@ namespace SSP_API.Types.Xsd
         /// <para xml:lang="en">Minimum length: 1.</para>
         /// <para xml:lang="en">Maximum length: 255.</para>
         /// </summary>
-        [System.ComponentModel.DescriptionAttribute("Регистрационный номер в стране регистрации (инкорпорации) или его аналог, присвое" +
-            "нный иностранной организации")]
+        [System.ComponentModel.DescriptionAttribute("Регистрационный номер в стране регистрации (инкорпорации) или его аналог, присвоенный иностранной организации")]
         [System.ComponentModel.DataAnnotations.MinLengthAttribute(1)]
         [System.ComponentModel.DataAnnotations.MaxLengthAttribute(255)]
         [System.Xml.Serialization.XmlElementAttribute("РегНомер")]
@@ -1567,7 +1593,7 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// Базовый конструктор для сериализации
         /// </summary>
-        private AbonentSspRequestInfoLegalEntity() { }
+        public AbonentSspRequestInfoLegalEntity() { }
 
         /// <summary>
         /// Инициализация экземпляра <see cref="AbonentSspRequestInfoLegalEntity"/>
@@ -1684,8 +1710,7 @@ namespace SSP_API.Types.Xsd
         /// <para xml:lang="en">Minimum length: 1.</para>
         /// <para xml:lang="en">Maximum length: 255.</para>
         /// </summary>
-        [System.ComponentModel.DescriptionAttribute("Номер налогоплательщика, присвоенный уполномоченным органом иностранного государс" +
-            "тва, или его аналог")]
+        [System.ComponentModel.DescriptionAttribute("Номер налогоплательщика, присвоенный уполномоченным органом иностранного государства, или его аналог")]
         [System.ComponentModel.DataAnnotations.MinLengthAttribute(1)]
         [System.ComponentModel.DataAnnotations.MaxLengthAttribute(255)]
         [System.Xml.Serialization.XmlElementAttribute("НомерНП")]
@@ -1762,10 +1787,11 @@ namespace SSP_API.Types.Xsd
 
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         private System.Collections.ObjectModel.Collection<PurposeConsentInfo> _purpose;
-        
+
         /// <summary>
         /// <para>Цель запроса</para>
         /// </summary>
+        [System.ComponentModel.DataAnnotations.Display(Name = "Список целей запроса")]
         [System.ComponentModel.DescriptionAttribute("Цель запроса")]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlElementAttribute("Цель")]
