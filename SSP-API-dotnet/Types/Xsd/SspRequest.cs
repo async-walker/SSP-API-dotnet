@@ -1824,7 +1824,7 @@ namespace SSP_API.Types.Xsd
         [System.ComponentModel.DescriptionAttribute("Дата запроса")]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlAttributeAttribute("Дата", DataType = "date")]
-        public System.DateTime DateRequest { get; } = System.DateTime.UtcNow;
+        public System.DateTime DateRequest { get; set; } = System.DateTime.UtcNow;
     }
 
     /// <summary>
@@ -2006,7 +2006,7 @@ namespace SSP_API.Types.Xsd
         public AmountObligations(double value, CurrencyType currency)
         {
             Value = value;
-            Currency = currency.ToString();
+            Currency = currency;
         }
 
         /// <summary>
@@ -2026,7 +2026,7 @@ namespace SSP_API.Types.Xsd
         [System.ComponentModel.DataAnnotations.RegularExpressionAttribute("[A-Z]{3}")]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlAttributeAttribute("Валюта")]
-        public string Currency { get; set; }
+        public CurrencyType Currency { get; set; }
     }
 
     /// <summary>
