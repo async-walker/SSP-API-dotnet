@@ -13,8 +13,6 @@ using System.Collections.ObjectModel;
 
 namespace SSP_API.Types.Xsd
 {
-
-
     /// <summary>
     /// <para>Фамилия, имя и отчество</para>
     /// </summary>
@@ -27,7 +25,7 @@ namespace SSP_API.Types.Xsd
     public partial class FullName
     {
         /// <summary>
-        /// Стандартный констуктор для сериализации
+        /// Стандартный конструктор для сериализации
         /// </summary>
         public FullName() { }
 
@@ -234,6 +232,11 @@ namespace SSP_API.Types.Xsd
     public partial class IdentityDocument
     {
         /// <summary>
+        /// Стандартный конструктор для сериализации
+        /// </summary>
+        public IdentityDocument() { }
+
+        /// <summary>
         /// Инициализация экземпляра <see cref="IdentityDocument"/>
         /// </summary>
         /// <param name="series"></param>
@@ -254,8 +257,6 @@ namespace SSP_API.Types.Xsd
             Citizen = citizen;
             CodeIdentityDocument = codeIdentityDocument;
         }
-
-        private IdentityDocument() { }
 
         /// <summary>
         /// <para>Серия</para>
@@ -319,7 +320,10 @@ namespace SSP_API.Types.Xsd
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class EntrepreneurIdentityDocument
     {
-        private EntrepreneurIdentityDocument() { }
+        /// <summary>
+        /// Стандартный конструктор для сериализации
+        /// </summary>
+        public EntrepreneurIdentityDocument() { }
 
         /// <summary>
         /// Инициализация экзмепляра <see cref="EntrepreneurIdentityDocument"/>
@@ -440,12 +444,24 @@ namespace SSP_API.Types.Xsd
         /// </summary>
         /// <param name="fullNames"></param>
         /// <param name="identityDocuments"></param>
+        /// <param name="birthDate"></param>
+        /// <param name="inn"></param>
+        /// <param name="snils"></param>
+        /// <param name="taxpayerNumber"></param>
         public SubjectInfo(
             Collection<FullName> fullNames,
-            Collection<IdentityDocument> identityDocuments)
+            Collection<IdentityDocument> identityDocuments,
+            DateTime birthDate,
+            string inn = default,
+            string snils = default,
+            string taxpayerNumber = default)
         {
             _fullname = fullNames; 
             _identityDocument = identityDocuments;
+            BirthDate = birthDate;
+            Inn = inn;
+            Snils = snils;
+            TaxpayerNumber = taxpayerNumber;
         }
 
         [System.Xml.Serialization.XmlIgnoreAttribute()]

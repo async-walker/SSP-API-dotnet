@@ -15,8 +15,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SSP_API.Types.Xsd
 {
-
-
     /// <summary>
     /// <para>Коды сроков действия согласия</para>
     /// </summary>
@@ -26,7 +24,6 @@ namespace SSP_API.Types.Xsd
     [System.Xml.Serialization.XmlTypeAttribute("КодыСрокаСогласия", Namespace="")]
     public enum ConsentExpirationType
     {
-
         /// <summary>
         /// <para>Согласие действительно в течение шести месяцев со дня его оформления</para>
         /// </summary>
@@ -46,7 +43,7 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>В течение срока действия согласия с субъектом кредитной истории были заключены договор займа (кредита), договор лизинга, договор залога, договор поручительства, выдана независимая гарантия</para>
         /// </summary>
-        [Display(Name = "В течение срока действия согласия с субъектом кредитной истории были заключены договор займа (кредита),\n\r\r\r\t договор лизинга,\n договор залога,\n договор поручительства,\n выдана независимая гарантия")]
+        [Display(Name = "В течение срока действия согласия с субъектом кредитной истории были заключены договор займа (кредита), договор лизинга, договор залога, договор поручительства, выдана независимая гарантия")]
         [System.ComponentModel.DescriptionAttribute("В течение срока действия согласия с субъектом кредитной истории были заключены договор займа (кредита), договор лизинга, договор залога, договор поручительства, выдана независимая гарантия")]
         [System.Xml.Serialization.XmlEnumAttribute("3")]
         Item3,
@@ -61,7 +58,6 @@ namespace SSP_API.Types.Xsd
     [System.Xml.Serialization.XmlTypeAttribute("КодыЦелиСогласия", Namespace="")]
     public enum PurposeIssuingConsentType
     {
-        
         /// <summary>
         /// <para>Потребительский заем (кредит) на приобретение автомобиля</para>
         /// </summary>
@@ -268,7 +264,6 @@ namespace SSP_API.Types.Xsd
     [System.Xml.Serialization.XmlTypeAttribute("КодыОснованийПередачиСогласия", Namespace="")]
     public enum GroundTransferringConsentAssigneeType
     {
-
         /// <summary>
         /// <para>Согласие субъекта кредитной истории передано правопреемнику по заключенному договору займа (кредита) или иному договору, информация об обязательствах по которым передается в бюро кредитных историй</para>
         /// </summary>
@@ -295,7 +290,6 @@ namespace SSP_API.Types.Xsd
     [System.Xml.Serialization.XmlTypeAttribute("КодыВидаПользователя", Namespace="")]
     public enum CreditHistoryUserType
     {
-        
         /// <summary>
         /// <para>Индивидуальный предприниматель</para>
         /// </summary>
@@ -381,10 +375,29 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// Инициализация экземпляра <see cref="ConsentInfo"/>
         /// </summary>
+        /// <param name="consentGranted"></param>
+        /// <param name="consentAgreement"></param>
         /// <param name="purposeConsents"></param>
-        public ConsentInfo(Collection<PurposeConsentInfo> purposeConsents)
+        /// <param name="hash"></param>
+        /// <param name="dateIssue"></param>
+        /// <param name="consentExpiration"></param>
+        /// <param name="basisTransfer"></param>
+        public ConsentInfo(
+            ConsentGranted consentGranted,
+            ConsentAgreement consentAgreement,
+            Collection<PurposeConsentInfo> purposeConsents,
+            string hash,
+            DateTime dateIssue,
+            ConsentExpirationType consentExpiration,
+            GroundTransferringConsentAssigneeType basisTransfer)
         {
+            Granted = consentGranted;
+            Contract = consentAgreement;
             _purpose = purposeConsents;
+            Hash = hash;
+            DateIssue = dateIssue;
+            ConsentExpiration = consentExpiration;
+            BasisTransfer = basisTransfer;
         }
 
         /// <summary>
@@ -507,7 +520,47 @@ namespace SSP_API.Types.Xsd
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ConsentGranted
     {
-        
+        /// <summary>
+        /// Стандартный конструктор для сериализации
+        /// </summary>
+        public ConsentGranted() { }
+
+        /// <summary>
+        /// Инициализация экземпляра <see cref="ConsentGranted"/>
+        /// </summary>
+        /// <param name="legalEntityInfo">Согласие <see cref="LegalEntityInfo"/></param>
+        public ConsentGranted(LegalEntityInfo legalEntityInfo)
+        {
+            LegalEntity = legalEntityInfo;
+        }
+
+        /// <summary>
+        /// Инициализация экземпляра <see cref="ConsentGranted"/>
+        /// </summary>
+        /// <param name="individualEntrepreneurInfo">Согласие <see cref="IndividualEntrepreneurInfo"/></param>
+        public ConsentGranted(IndividualEntrepreneurInfo individualEntrepreneurInfo)
+        {
+            IndividualEntrepreneur = individualEntrepreneurInfo;
+        }
+
+        /// <summary>
+        /// Инициализация экземпляра <see cref="ConsentGranted"/>
+        /// </summary>
+        /// <param name="foreignLegalEntityInfo">Согласие <see cref="ForeignLegalEntityInfo"/></param>
+        public ConsentGranted(ForeignLegalEntityInfo foreignLegalEntityInfo)
+        {
+            ForeignLegalEntity = foreignLegalEntityInfo;
+        }
+
+        /// <summary>
+        /// Инициализация экземпляра <see cref="ConsentGranted"/>
+        /// </summary>
+        /// <param name="foreignIndividualEntrepreneurInfo">Согласие <see cref="ForeignIndividualEntrepreneurInfo"/></param>
+        public ConsentGranted(ForeignIndividualEntrepreneurInfo foreignIndividualEntrepreneurInfo)
+        {
+            ForeignEntrepreneur = foreignIndividualEntrepreneurInfo;
+        }
+
         /// <summary>
         /// <para>Информация о юридическом лице, которому выдано согласие</para>
         /// </summary>
@@ -548,6 +601,26 @@ namespace SSP_API.Types.Xsd
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class LegalEntityInfo
     {
+        /// <summary>
+        /// Стандартный конструктор для сериализации
+        /// </summary>
+        public LegalEntityInfo() { }
+
+        /// <summary>
+        /// Инициализация экземпляра <see cref="LegalEntityInfo"/>
+        /// </summary>
+        /// <param name="inn">ИНН</param>
+        /// <param name="ogrn">ОГРН</param>
+        /// <param name="fullname">Полное наименование</param>
+        public LegalEntityInfo(
+            string inn,
+            string ogrn,
+            string fullname)
+        {
+            Inn = inn;
+            Ogrn = ogrn;
+            Fullname = fullname;
+        }
         
         /// <summary>
         /// <para>ИНН юридического лица</para>
@@ -598,7 +671,27 @@ namespace SSP_API.Types.Xsd
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class IndividualEntrepreneurInfo
     {
-        
+        /// <summary>
+        /// Стандартный конструктор для сериализации
+        /// </summary>
+        public IndividualEntrepreneurInfo() { }
+
+        /// <summary>
+        /// Инициализация экземпляра <see cref="IndividualEntrepreneurInfo"/>
+        /// </summary>
+        /// <param name="inn">ИНН</param>
+        /// <param name="ogrn">ОГРН</param>
+        /// <param name="fullName">ФИО</param>
+        public IndividualEntrepreneurInfo(
+            string inn,
+            string ogrn,
+            FullName fullName)
+        {
+            Inn = inn;
+            Ogrn = ogrn;
+            Fullname = fullName;
+        }
+
         /// <summary>
         /// <para>ИНН индивидуального предпринимателя</para>
         /// <para>Индивидуальный номер налогоплательщика физического лица</para>
@@ -641,15 +734,34 @@ namespace SSP_API.Types.Xsd
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ForeignLegalEntityInfo
     {
-        
+        /// <summary>
+        /// Стандартный конструктор для сериализации
+        /// </summary>
+        public ForeignLegalEntityInfo() { }
+
+        /// <summary>
+        /// Инициализация экземпляра <see cref="ForeignLegalEntityInfo"/>
+        /// </summary>
+        /// <param name="number">Номер налогоплательщика, присвоенный уполномоченным органом иностранного государства, или его аналог</param>
+        /// <param name="regNumber">Регистрационный номер в стране регистрации (инкорпорации) или его аналог</param>
+        /// <param name="fullname">Полное наименование</param>
+        public ForeignLegalEntityInfo(
+            string number,
+            string regNumber,
+            string fullname)
+        {
+            Number = number;
+            RegNumber = regNumber;
+            Fullname = fullname;
+        }
+
         /// <summary>
         /// <para>Номер налогоплательщика, присвоенный уполномоченным органом иностранного государства, или его аналог</para>
         /// <para>Номер налогоплательщика присвоенный иностранным государством</para>
         /// <para xml:lang="en">Minimum length: 1.</para>
         /// <para xml:lang="en">Maximum length: 255.</para>
         /// </summary>
-        [System.ComponentModel.DescriptionAttribute("Номер налогоплательщика, присвоенный уполномоченным органом иностранного государс" +
-            "тва, или его аналог")]
+        [System.ComponentModel.DescriptionAttribute("Номер налогоплательщика, присвоенный уполномоченным органом иностранного государства, или его аналог")]
         [System.ComponentModel.DataAnnotations.MinLengthAttribute(1)]
         [System.ComponentModel.DataAnnotations.MaxLengthAttribute(255)]
         [System.Xml.Serialization.XmlElementAttribute("НомерНП")]
@@ -694,7 +806,27 @@ namespace SSP_API.Types.Xsd
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ForeignIndividualEntrepreneurInfo
     {
-        
+        /// <summary>
+        /// Стандартный конструктор для сериализации
+        /// </summary>
+        public ForeignIndividualEntrepreneurInfo() { }
+
+        /// <summary>
+        /// Инициализация экземпляра <see cref="ForeignIndividualEntrepreneurInfo"/>
+        /// </summary>
+        /// <param name="number">Номер налогоплательщика, присвоенный уполномоченным органом иностранного государства, или его аналог</param>
+        /// <param name="regNumber">Регистрационный номер в стране регистрации (инкорпорации) или его аналог</param>
+        /// <param name="fullName">ФИО</param>
+        public ForeignIndividualEntrepreneurInfo(
+            string number,
+            string regNumber,
+            FullName fullName)
+        {
+            Number = number; 
+            RegNumber = regNumber;
+            Fullname = fullName;
+        }
+
         /// <summary>
         /// <para>Номер налогоплательщика, присвоенный уполномоченным органом иностранного государства, или его аналог</para>
         /// <para>Номер налогоплательщика присвоенный иностранным государством</para>
@@ -739,7 +871,24 @@ namespace SSP_API.Types.Xsd
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PurposeConsentInfo
     {
-        
+        /// <summary>
+        /// Стандартный конструктор для сериализации
+        /// </summary>
+        public PurposeConsentInfo() { }
+
+        /// <summary>
+        /// Инициализация экземпляра <see cref="PurposeConsentInfo"/>
+        /// </summary>
+        /// <param name="targetCode">Код цели</param>
+        /// <param name="description">Описание иной цели</param>
+        public PurposeConsentInfo(
+            TargetCodeType targetCode, 
+            string description = default)
+        {
+            TargetCode = targetCode;
+            Description = description;
+        }
+
         /// <summary>
         /// <para>Код цели</para>
         /// </summary>
@@ -784,7 +933,7 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>Потребительский заем (кредит) нецелевой</para>
         /// </summary>
-        [System.ComponentModel.DataAnnotations.Display(Name = "Потребительский заем (кредит) нецелевой\"")]
+        [System.ComponentModel.DataAnnotations.Display(Name = "Потребительский заем (кредит) нецелевой")]
         [System.ComponentModel.DescriptionAttribute("Потребительский заем (кредит) нецелевой")]
         [System.Xml.Serialization.XmlEnumAttribute("3")]
         Item3,
@@ -990,6 +1139,9 @@ namespace SSP_API.Types.Xsd
         Item99,
     }
     
+    /// <summary>
+    /// Согласие договора
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("XmlSchemaClassGenerator", "2.1.963.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute("ТипСогласиеДоговор", Namespace="", AnonymousType=true)]
@@ -997,6 +1149,19 @@ namespace SSP_API.Types.Xsd
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ConsentAgreement
     {
+        /// <summary>
+        /// Стандартный конструктор для сериализации
+        /// </summary>
+        public ConsentAgreement() { }
+
+        /// <summary>
+        /// Инициализация экземпляра <see cref="ConsentAgreement"/>
+        /// </summary>
+        /// <param name="date">Дата заключения договора</param>
+        public ConsentAgreement(DateTime date)
+        {
+            Date = date;
+        }
         
         /// <summary>
         /// <para>Дата заключения договора</para>
@@ -1018,7 +1183,10 @@ namespace SSP_API.Types.Xsd
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class IndividualEntrepreneur
     {
-        private IndividualEntrepreneur() { }
+        /// <summary>
+        /// Стандартный конструктор для сериализации
+        /// </summary>
+        public IndividualEntrepreneur() { }
 
         /// <summary>
         /// Инициализация экземпляра <see cref="IndividualEntrepreneur"/>
@@ -1348,7 +1516,10 @@ namespace SSP_API.Types.Xsd
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ForeignEntrepreneur
     {
-        private ForeignEntrepreneur() { }
+        /// <summary>
+        /// Стандартный конструктор для сериализации
+        /// </summary>
+        public ForeignEntrepreneur() { }
 
         /// <summary>
         /// Инициализация экземпляра <see cref="ForeignEntrepreneur"/>
@@ -1542,7 +1713,7 @@ namespace SSP_API.Types.Xsd
     public partial class AbonentSspRequest
     {
         /// <summary>
-        /// Конструктор для сериализации
+        /// Стандартный конструктор для сериализации
         /// </summary>
         public AbonentSspRequest() { }
 
@@ -1606,7 +1777,7 @@ namespace SSP_API.Types.Xsd
     public partial class AbonentSspRequestInfoLegalEntity
     {
         /// <summary>
-        /// Базовый конструктор для сериализации
+        /// Стандартный конструктор для сериализации
         /// </summary>
         public AbonentSspRequestInfoLegalEntity() { }
 
@@ -1655,7 +1826,7 @@ namespace SSP_API.Types.Xsd
     public partial class AbonentSspRequestInfoIndividualEntrepreneur
     {
         /// <summary>
-        /// Базовый конструктор для сериализации
+        /// Стандартный конструктор для сериализации
         /// </summary>
         public AbonentSspRequestInfoIndividualEntrepreneur() { }
 
@@ -1704,7 +1875,7 @@ namespace SSP_API.Types.Xsd
     public partial class AbonentSspRequestInfoForeignPerson
     {
         /// <summary>
-        /// Базовый конструктор для сериализации
+        /// Стандартный конструктор для сериализации
         /// </summary>
         public AbonentSspRequestInfoForeignPerson() { }
 
@@ -1860,7 +2031,7 @@ namespace SSP_API.Types.Xsd
     public partial class SourceInfoRequest
     {
         /// <summary>
-        /// Базовый конструктор для сериализации
+        /// Стандартный конструктор для сериализации
         /// </summary>
         public SourceInfoRequest() { }
 
@@ -1939,7 +2110,10 @@ namespace SSP_API.Types.Xsd
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class LegalEntitySource : LegalEntity
     {
-        private LegalEntitySource() { }
+        /// <summary>
+        /// Стандартный конструктор для сериализации
+        /// </summary>
+        public LegalEntitySource() { }
 
         /// <summary>
         /// Инициализация экземпляра <see cref="LegalEntitySource"/>
@@ -1977,7 +2151,10 @@ namespace SSP_API.Types.Xsd
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ForeignLegalEntitySource : ForeignLegalEntity
     {
-        private ForeignLegalEntitySource() { }
+        /// <summary>
+        /// Стандартный конструктор для сериализации
+        /// </summary>
+        public ForeignLegalEntitySource() { }
 
         /// <summary>
         /// Инициализация экземпляра <see cref="ForeignLegalEntitySource"/>
@@ -2019,7 +2196,7 @@ namespace SSP_API.Types.Xsd
     public partial class AmountObligations
     {
         /// <summary>
-        /// Базовый конструтктор для сериализации
+        /// Стандартный конструктор для сериализации
         /// </summary>
         public AmountObligations() { }
 
