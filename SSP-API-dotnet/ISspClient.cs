@@ -11,7 +11,7 @@ namespace SSP_API
         /// Направление запроса на получение ССП
         /// </summary>
         /// <returns></returns>
-        Task<RequestResult> SendRequestAsync(SspRequest sspRequest);
+        Task<RequestResult> SendRequestAsync(Stream source);
         /// <summary>
         /// Получение отчёта
         /// </summary>

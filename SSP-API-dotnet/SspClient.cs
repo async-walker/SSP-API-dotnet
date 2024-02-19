@@ -1,7 +1,7 @@
 ﻿using RestSharp;
-using RestSharp.Authenticators;
 using SSP_API.Extensions;
 using SSP_API.Types.Xsd;
+using System.Text;
 
 namespace SSP_API
 {
@@ -10,19 +10,16 @@ namespace SSP_API
     /// </summary>
     public class SspClient : ISspClient, IDisposable
     {
-        readonly RestClient _client = default!;
+        readonly RestClient _client;
 
         /// <summary>
-        /// Инициализация <see cref="SspClient"/>
+        /// Инициализация экземпляра <see cref="SspClient"/>
         /// </summary>
         /// <param name="options"></param>
         public SspClient(SspClientOptions options)
         {
             var restOptions = new RestClientOptions(options.ApiAddress)
             {
-                Authenticator = new HttpBasicAuthenticator(
-                    username: options.Credential.UserName,
-                    password: options.Credential.Password),
                 ClientCertificates = options.ClientCertificates,
                 UserAgent = "SspClient"
             };
@@ -51,13 +48,13 @@ namespace SSP_API
         }
 
         /// <inheritdoc/>
-        public async Task<RequestResult> SendRequestAsync(SspRequest sspRequest)
+        public async Task<RequestResult> SendRequestAsync(Stream source)
         {
             var request = new RestRequest("dlrequest", Method.Post)
-                .AddXmlBody(sspRequest);
+                .AddFile("file", source.GetBytes(), "qcb_request.xml");
 
             var response = await _client.GetResponseAsync(request);
-
+            
             var requestResult = response.Content!.DeserializeXml<RequestResult>();
 
             return requestResult;
