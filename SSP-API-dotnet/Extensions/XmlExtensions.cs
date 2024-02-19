@@ -14,7 +14,7 @@ namespace SSP_API.Extensions
 
             xmlSerializer.Serialize(ms, element);
 
-            var data = ms.GetStringFromMemoryStream();
+            var data = ms.GetString();
 
             return data;
         }
