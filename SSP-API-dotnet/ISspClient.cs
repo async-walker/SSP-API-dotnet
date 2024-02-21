@@ -10,9 +10,9 @@ namespace SSP_API
         /// <summary>
         /// Направление запроса на получение ССП
         /// </summary>
-        /// <param name="source">Источник данных с подписью</param>
+        /// <param name="sspRequest">Запрос с запрашиваемыми данными на поиск СПП</param>
         /// <returns>Экземпляр <see cref="RequestResult"/> с результатом запроса</returns>
-        Task<RequestResult> SendRequestAsync(Stream source);
+        Task<RequestResult> SendRequestAsync(SspRequest sspRequest);
         /// <summary>
         /// Получение отчёта
         /// </summary>
