@@ -12,4 +12,10 @@
     <PackageReference Include="RestSharp" Version="110.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="CryptCP">
+      <HintPath>..\..\CryptoPro.Adapter\CryptoPro.Adapter\bin\Debug\net8.0\CryptCP.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
