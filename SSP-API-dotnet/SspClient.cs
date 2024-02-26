@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using CryptoPro.Adapter.CryptCP;
+using RestSharp;
 using SSP_API.Extensions;
 using SSP_API.Types.Xsd;
 using System.Text;
@@ -11,13 +12,17 @@ namespace SSP_API
     public class SspClient : ISspClient, IDisposable
     {
         readonly RestClient _client;
+        readonly ICryptCP _cryptCP;
 
         /// <summary>
         /// Инициализация экземпляра <see cref="SspClient"/>
         /// </summary>
         /// <param name="options"></param>
-        public SspClient(SspClientOptions options)
+        /// <param name="cryptCP"></param>
+        public SspClient(SspClientOptions options, ICryptCP cryptCP)
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
             var restOptions = new RestClientOptions(options.ApiAddress)
             {
                 ClientCertificates = options.ClientCertificates,
@@ -25,6 +30,7 @@ namespace SSP_API
             };
 
             _client = new RestClient(restOptions);
+            _cryptCP = cryptCP;
         }
 
         /// <inheritdoc/>
@@ -35,27 +41,55 @@ namespace SSP_API
         }
 
         /// <inheritdoc/>
-        public async Task<SspInfo> GetAnswerAsync(string answerId)
+        public async Task<SspInfo> GetAnswerAsync(
+            string answerId,
+            string directoryToSaveFiles,
+            CriteriasSearchCertificate delSignCriterias)
         {
             var request = new RestRequest("dlanswer", Method.Get)
                 .AddQueryParameter("id", answerId);
 
             var response = await _client.GetResponseAsync(request);
 
-            var sspInfo = response.Content!.DeserializeXml<SspInfo>();
+            var unsignedContent = await _cryptCP.DelSignAsync(
+                criterias: delSignCriterias,
+                data: response.Content!,
+                directoryToSaveFiles);
+
+            var sspInfo = Encoding.Default
+                .GetString(unsignedContent)
+                .DeserializeXml<SspInfo>();
 
             return sspInfo;
         }
 
         /// <inheritdoc/>
-        public async Task<RequestResult> SendRequestAsync(Stream source)
+        public async Task<RequestResult> SendRequestAsync(
+            SspRequest sspRequest,
+            string directoryToSaveFiles,
+            CriteriasSearchCertificate signCriterias,
+            CriteriasSearchCertificate delSignCriterias)
         {
+            var xml = sspRequest.ConvertToXml();
+
+            var signedData = await _cryptCP.SignDataAsync(
+                criterias: signCriterias,
+                data: xml,
+                directoryToSaveFiles);
+
             var request = new RestRequest("dlrequest", Method.Post)
-                .AddFile("file", source.GetBytes(), "qcb_request.xml");
+                .AddBody(signedData, ContentType.Xml);
 
             var response = await _client.GetResponseAsync(request);
-            
-            var requestResult = response.Content!.DeserializeXml<RequestResult>();
+
+            var unsignedContent = await _cryptCP.DelSignAsync(
+                criterias: delSignCriterias,
+                data: response.Content!,
+                directoryToSaveFiles);
+
+            var requestResult = Encoding.Default
+                .GetString(unsignedContent)
+                .DeserializeXml<RequestResult>();
 
             return requestResult;
         }
