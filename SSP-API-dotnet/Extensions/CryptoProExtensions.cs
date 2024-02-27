@@ -1,4 +1,5 @@
 ﻿using CryptoPro.Adapter.CryptCP;
+using CryptoPro.Adapter.CryptCP.Types;
 using System.Text;
 
 namespace SSP_API.Extensions
@@ -7,7 +8,7 @@ namespace SSP_API.Extensions
     {
         public static async Task<byte[]> SignDataAsync(
             this ICryptCP cryptCP, 
-            CriteriasSearchCertificate criterias, 
+            CriteriasSearchCertificates criterias, 
             string data, 
             string directoryToSaveFiles)
         {
@@ -35,34 +36,33 @@ namespace SSP_API.Extensions
             return signedFile.GetBytes();
         }
 
-        public static async Task<byte[]> DelSignAsync(
+        public static async Task<byte[]> VerifySignAsync(
             this ICryptCP cryptCP,
-            CriteriasSearchCertificate criterias,
-            string data,
+            CriteriasSearchCertificates criterias,
+            byte[] data,
             string directoryToSaveFiles)
         {
-            var receivedFilePath = $@"{directoryToSaveFiles}\response.xml.sig";
+            var receivedFilePath = $@"{directoryToSaveFiles}\response.xml.p7s";
 
-            using (var sw = new StreamWriter(
+            using (var recievedFile = new FileStream(
                 path: receivedFilePath,
-                append: false,
-                encoding: Encoding.Default))
+                mode: FileMode.Create))
             {
-                await sw.WriteAsync(data);
+                await recievedFile.WriteAsync(data);
             }
 
-            //using (var responsedFile = new FileStream(
-            //    path: receivedFilePath,
-            //    mode: FileMode.Create))
-            //{
-            //    var bytes = Encoding.Default.GetBytes(data);
+            var unsignedFilePath = $@"{directoryToSaveFiles}\response.xml";
 
-            //    await responsedFile.WriteAsync(bytes);
-            //}
+            await cryptCP.VerifyMessageSignature(
+                criterias,
+                sourceFilePath: receivedFilePath,
+                destinationFilePath: unsignedFilePath);
 
-            var unsignedFilePath = cryptCP.DeleteSiganture();
+            using var unsignedFile = new FileStream(
+                path: unsignedFilePath, 
+                mode: FileMode.Open);
 
-            return [];
+            return unsignedFile.GetBytes();
         }
     }
 }
