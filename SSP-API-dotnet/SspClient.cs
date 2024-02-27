@@ -45,16 +45,16 @@ namespace SSP_API
         public async Task<SspInfo> GetAnswerAsync(
             string answerId,
             string directoryToSaveFiles,
-            CriteriasSearchCertificates delSignCriterias)
+            CriteriasSearchCertificates verifySignCriterias)
         {
             var request = new RestRequest("dlanswer", Method.Get)
                 .AddQueryParameter("id", answerId);
 
             var response = await _client.GetResponseAsync(request);
 
-            var unsignedContent = await _cryptCP.DelSignAsync(
-                criterias: delSignCriterias,
-                data: response.Content!,
+            var unsignedContent = await _cryptCP.VerifySignAsync(
+                criterias: verifySignCriterias,
+                data: response.RawBytes!,
                 directoryToSaveFiles);
 
             var sspInfo = Encoding.Default
@@ -69,7 +69,7 @@ namespace SSP_API
             SspRequest sspRequest,
             string directoryToSaveFiles,
             CriteriasSearchCertificates signCriterias,
-            CriteriasSearchCertificates delSignCriterias)
+            CriteriasSearchCertificates verifySignCriterias)
         {
             var xml = sspRequest.ConvertToXml();
 
@@ -83,9 +83,9 @@ namespace SSP_API
 
             var response = await _client.GetResponseAsync(request);
 
-            var unsignedContent = await _cryptCP.DelSignAsync(
-                criterias: delSignCriterias,
-                data: response.Content!,
+            var unsignedContent = await _cryptCP.VerifySignAsync(
+                criterias: verifySignCriterias,
+                data: response.RawBytes!,
                 directoryToSaveFiles);
 
             var requestResult = Encoding.Default
