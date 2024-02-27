@@ -1,4 +1,4 @@
-﻿using CryptoPro.Adapter.CryptCP;
+﻿using CryptoPro.Adapter.CryptCP.Types;
 using SSP_API.Types.Xsd;
 
 namespace SSP_API
@@ -19,8 +19,8 @@ namespace SSP_API
         Task<RequestResult> SendRequestAsync(
             SspRequest sspRequest, 
             string directoryToSaveFiles,
-            CriteriasSearchCertificate signCriterias,
-            CriteriasSearchCertificate delSignCriterias);
+            CriteriasSearchCertificates signCriterias,
+            CriteriasSearchCertificates delSignCriterias);
         /// <summary>
         /// Получение отчёта
         /// </summary>
@@ -31,6 +31,6 @@ namespace SSP_API
         Task<SspInfo> GetAnswerAsync(
             string answerId,
             string directoryToSaveFiles,
-            CriteriasSearchCertificate delSignCriterias);
+            CriteriasSearchCertificates delSignCriterias);
     }
 }

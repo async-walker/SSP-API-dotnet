@@ -1,4 +1,5 @@
 ﻿using CryptoPro.Adapter.CryptCP;
+using CryptoPro.Adapter.CryptCP.Types;
 using RestSharp;
 using SSP_API.Extensions;
 using SSP_API.Types.Xsd;
@@ -44,7 +45,7 @@ namespace SSP_API
         public async Task<SspInfo> GetAnswerAsync(
             string answerId,
             string directoryToSaveFiles,
-            CriteriasSearchCertificate delSignCriterias)
+            CriteriasSearchCertificates delSignCriterias)
         {
             var request = new RestRequest("dlanswer", Method.Get)
                 .AddQueryParameter("id", answerId);
@@ -67,8 +68,8 @@ namespace SSP_API
         public async Task<RequestResult> SendRequestAsync(
             SspRequest sspRequest,
             string directoryToSaveFiles,
-            CriteriasSearchCertificate signCriterias,
-            CriteriasSearchCertificate delSignCriterias)
+            CriteriasSearchCertificates signCriterias,
+            CriteriasSearchCertificates delSignCriterias)
         {
             var xml = sspRequest.ConvertToXml();
 
