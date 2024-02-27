@@ -55,7 +55,8 @@ namespace SSP_API
             var unsignedContent = await _cryptCP.VerifySignAsync(
                 criterias: verifySignCriterias,
                 data: response.RawBytes!,
-                directoryToSaveFiles);
+                directoryToSaveFiles,
+                fileName: "qcb_answer.xml.p7s");
 
             var sspInfo = Encoding.Default
                 .GetString(unsignedContent)
@@ -76,7 +77,8 @@ namespace SSP_API
             var signedData = await _cryptCP.SignDataAsync(
                 criterias: signCriterias,
                 data: xml,
-                directoryToSaveFiles);
+                directoryToSaveFiles,
+                fileName: "qcb_request.xml");
 
             var request = new RestRequest("dlrequest", Method.Post)
                 .AddBody(signedData, ContentType.Xml);
@@ -86,7 +88,8 @@ namespace SSP_API
             var unsignedContent = await _cryptCP.VerifySignAsync(
                 criterias: verifySignCriterias,
                 data: response.RawBytes!,
-                directoryToSaveFiles);
+                directoryToSaveFiles,
+                fileName: "qcb_result.xml.p7s");
 
             var requestResult = Encoding.Default
                 .GetString(unsignedContent)

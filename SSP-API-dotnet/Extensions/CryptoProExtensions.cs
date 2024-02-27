@@ -10,9 +10,11 @@ namespace SSP_API.Extensions
             this ICryptCP cryptCP, 
             CriteriasSearchCertificates criterias, 
             string data, 
-            string directoryToSaveFiles)
+            string directoryToSaveFiles,
+            string fileName)
         {
-            var sspReqFile = $@"{directoryToSaveFiles}\qcb_request.xml";
+            var sspReqFile = Path.Combine(
+                directoryToSaveFiles, fileName);
 
             using (var xmlFile = new FileStream(
                 path: sspReqFile,
@@ -40,9 +42,11 @@ namespace SSP_API.Extensions
             this ICryptCP cryptCP,
             CriteriasSearchCertificates criterias,
             byte[] data,
-            string directoryToSaveFiles)
+            string directoryToSaveFiles,
+            string fileName)
         {
-            var receivedFilePath = $@"{directoryToSaveFiles}\response.xml.p7s";
+            var receivedFilePath = Path.Combine(
+                directoryToSaveFiles, fileName);
 
             using (var recievedFile = new FileStream(
                 path: receivedFilePath,
@@ -51,7 +55,10 @@ namespace SSP_API.Extensions
                 await recievedFile.WriteAsync(data);
             }
 
-            var unsignedFilePath = $@"{directoryToSaveFiles}\response.xml";
+            var unsignedFilePath = Path.Combine(
+                directoryToSaveFiles, Path.ChangeExtension(
+                    path: fileName,
+                    extension: string.Empty));
 
             await cryptCP.VerifyMessageSignature(
                 criterias,
