@@ -25,7 +25,6 @@ namespace SSP_API.Types.Xsd
     [System.Xml.Serialization.XmlRootAttribute("Результат", Namespace="")]
     public partial class RequestResult
     {
-        
         /// <summary>
         /// <para>Идентификатор, присвоенный ответу</para>
         /// </summary>

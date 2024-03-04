@@ -268,7 +268,6 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>Согласие субъекта кредитной истории передано правопреемнику по заключенному договору займа (кредита) или иному договору, информация об обязательствах по которым передается в бюро кредитных историй</para>
         /// </summary>
-        [Display(Name = "Согласие субъекта кредитной истории передано правопреемнику по заключенному договору займа (кредита) или иному договору, информация об обязательствах по которым передается в бюро кредитных историй")]
         [System.ComponentModel.DescriptionAttribute("Согласие субъекта кредитной истории передано правопреемнику по заключенному договору займа (кредита) или иному договору, информация об обязательствах по которым передается в бюро кредитных историй")]
         [System.Xml.Serialization.XmlEnumAttribute("1")]
         Item1,
@@ -276,7 +275,6 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>Согласие субъекта кредитной истории передано кредитной организации, осуществляющей обслуживание денежных требований по договору займа (кредита), уступленных специализированному финансовому обществу или ипотечному агенту</para>
         /// </summary>
-        [Display(Name = "Согласие субъекта кредитной истории передано кредитной организации, осуществляющей обслуживание денежных требований по договору займа (кредита), уступленных специализированному финансовому обществу или ипотечному агенту")]
         [System.ComponentModel.DescriptionAttribute("Согласие субъекта кредитной истории передано кредитной организации, осуществляющей обслуживание денежных требований по договору займа (кредита), уступленных специализированному финансовому обществу или ипотечному агенту")]
         [System.Xml.Serialization.XmlEnumAttribute("2")]
         Item2,
@@ -436,6 +434,7 @@ namespace SSP_API.Types.Xsd
         /// <para>Хэш-код для согласия субъекта кредитной истории</para>
         /// <para xml:lang="en">Pattern: [\da-f]{64}.</para>
         /// </summary>
+        [Display(Name = "Хэш-код для согласия субъекта кредитной истории")]
         [System.ComponentModel.DescriptionAttribute("Хэш-код для согласия субъекта кредитной истории")]
         [System.ComponentModel.DataAnnotations.RegularExpressionAttribute("[\\da-f]{64}")]
         [System.Xml.Serialization.XmlElementAttribute("ХэшКод")]
@@ -1147,10 +1146,11 @@ namespace SSP_API.Types.Xsd
         {
             Date = date;
         }
-        
+
         /// <summary>
         /// <para>Дата заключения договора</para>
         /// </summary>
+        [Display(Name = "Дата заключения договора")]
         [System.ComponentModel.DescriptionAttribute("Дата заключения договора")]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlAttributeAttribute("Дата", DataType="date")]
@@ -2208,7 +2208,7 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para xml:lang="en">Gets or sets the text value.</para>
         /// </summary>
-        [System.ComponentModel.DataAnnotations.Display(Name = "Сумма обязательств")]
+        [System.ComponentModel.DataAnnotations.Display(Name = "Сумма")]
         [System.Xml.Serialization.XmlTextAttribute()]
         public double Value { get; set; }
 
