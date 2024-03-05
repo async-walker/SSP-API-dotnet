@@ -30,7 +30,7 @@ namespace SSP_API.Types.Xsd
         /// </summary>
         [System.ComponentModel.DescriptionAttribute("Идентификатор, присвоенный ответу")]
         [System.Xml.Serialization.XmlElementAttribute("ИдентификаторОтвета")]
-        public ResultIdAnswer RequestId { get; set; }
+        public ResultIdAnswer ResultId { get; set; }
         
         /// <summary>
         /// <para>Запрос обработан успешно (в случаях когда не требуется ответ)</para>

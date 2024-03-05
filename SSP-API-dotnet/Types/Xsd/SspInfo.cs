@@ -111,21 +111,23 @@ namespace SSP_API.Types.Xsd
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlAttributeAttribute("ИдентификаторОтвета")]
         public string AnswerId { get; set; }
-        
+
         /// <summary>
         /// <para>ОГРН КБКИ сформировавшего ответ</para>
         /// <para>Основной государственный регистрационный номер юридического лица</para>
         /// <para xml:lang="en">Pattern: \d{13}.</para>
         /// </summary>
+        [Display(Name = "ОГРН КБКИ сформировавшего ответ")]
         [System.ComponentModel.DescriptionAttribute("ОГРН КБКИ сформировавшего ответ")]
         [System.ComponentModel.DataAnnotations.RegularExpressionAttribute("\\d{13}")]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlAttributeAttribute("ОГРН")]
         public string Ogrn { get; set; }
-        
+
         /// <summary>
         /// <para>Тип ответа</para>
         /// </summary>
+        [Display(Name = "Тип ответа")]
         [System.ComponentModel.DescriptionAttribute("Тип ответа")]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlAttributeAttribute("ТипОтвета")]
@@ -204,7 +206,7 @@ namespace SSP_API.Types.Xsd
         {
             this._obligations = new System.Collections.ObjectModel.Collection<PaymentsInfoKbkiObligationsBki>();
         }
-        
+
         /// <summary>
         /// <para>ОГРН КБКИ - источника информации</para>
         /// </summary>
