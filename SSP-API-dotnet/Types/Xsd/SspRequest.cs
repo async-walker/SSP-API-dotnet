@@ -452,7 +452,7 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>Код срока действия согласия субъекта</para>
         /// </summary>
-        [System.ComponentModel.DataAnnotations.Display(Name = "Код срока действия согласия субъекта")]
+        [System.ComponentModel.DataAnnotations.Display(Name = "Срок действия согласия субъекта")]
         [System.ComponentModel.DescriptionAttribute("Код срока действия согласия субъекта")]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlAttributeAttribute("СрокДействия")]
