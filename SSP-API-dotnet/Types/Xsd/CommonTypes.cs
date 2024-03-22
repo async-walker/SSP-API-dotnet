@@ -509,7 +509,7 @@ namespace SSP_API.Types.Xsd
         /// <summary>
         /// <para>Документ, удостоверяющий личность</para>
         /// </summary>
-        [System.ComponentModel.DataAnnotations.Display(Name = "Список ДУЛ субьекта")]
+        [System.ComponentModel.DataAnnotations.Display(Name = "Список ДУЛ субъекта")]
         [System.ComponentModel.DataAnnotations.RequiredAttribute()]
         [System.Xml.Serialization.XmlElementAttribute("ДокументЛичности")]
         public System.Collections.ObjectModel.Collection<IdentityDocument> IdentityDocument
