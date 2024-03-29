@@ -1,8 +1,8 @@
-﻿using CryptoPro.Adapter.CryptCP;
-using CryptoPro.Adapter.CryptCP.Types;
+﻿using Client;
 using RestSharp;
 using SSP_API.Extensions;
 using SSP_API.Types.Xsd;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace SSP_API
@@ -12,15 +12,15 @@ namespace SSP_API
     /// </summary>
     public class SspClient : ISspClient, IDisposable
     {
-        readonly RestClient _client;
-        readonly ICryptCP _cryptCP;
+        private readonly RestClient _sspClient;
+        private readonly ICryptoGostClient _cryptoGostClient;
 
         /// <summary>
         /// Инициализация экземпляра <see cref="SspClient"/>
         /// </summary>
         /// <param name="options"></param>
-        /// <param name="cryptCP"></param>
-        public SspClient(SspClientOptions options, ICryptCP cryptCP)
+        /// <param name="cryptoGostApiAddress"></param>
+        public SspClient(SspClientOptions options, string cryptoGostApiAddress)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
@@ -30,36 +30,41 @@ namespace SSP_API
                 UserAgent = "SspClient"
             };
 
-            _client = new RestClient(restOptions);
-            _cryptCP = cryptCP;
+            _sspClient = new RestClient(restOptions);
+            _cryptoGostClient = new CryptoGostClient(cryptoGostApiAddress);
         }
 
         /// <inheritdoc/>
         public void Dispose()
         {
-            _client?.Dispose();
+            _sspClient?.Dispose();
             GC.SuppressFinalize(this);
         }
 
         /// <inheritdoc/>
-        public async Task<SspInfo> GetAnswerAsync(
-            string answerId,
-            string directoryToSaveFiles,
-            CriteriasSearchCertificates verifySignCriterias)
+        public async Task<SspInfo> GetAnswerAsync(string answerId, string directoryToSaveFiles)
         {
             var request = new RestRequest("dlanswer", Method.Get)
                 .AddQueryParameter("id", answerId);
 
-            var response = await _client.GetResponseAsync(request);
+            var response = await _sspClient.GetResponseAsync(request);
 
-            var unsignedContent = await _cryptCP.VerifySignAsync(
-                criterias: verifySignCriterias,
-                data: response.RawBytes!,
-                directoryToSaveFiles,
-                fileName: "qcb_answer.xml.p7s");
+            var signedMessage = response.RawBytes!;
+
+            using (var fs = new FileStream(
+                path: Path.Combine(directoryToSaveFiles, "qcb_answer.xml.p7s"),
+                FileMode.Create))
+                await fs.WriteAsync(signedMessage);
+
+            var unsignedMessage = await _cryptoGostClient.VerifySignCMS(signedMessage);
+
+            using (var fs = new FileStream(
+                path: Path.Combine(directoryToSaveFiles, "qcb_answer.xml"),
+                FileMode.Create))
+                await fs.WriteAsync(unsignedMessage);
 
             var sspInfo = Encoding.Default
-                .GetString(unsignedContent)
+                .GetString(unsignedMessage)
                 .DeserializeXml<SspInfo>();
 
             return sspInfo;
@@ -69,27 +74,46 @@ namespace SSP_API
         public async Task<RequestResult> SendRequestAsync(
             SspRequest sspRequest,
             string directoryToSaveFiles,
-            CriteriasSearchCertificates signCriterias,
-            CriteriasSearchCertificates verifySignCriterias)
+            string thumbprint,
+            StoreName storeName = StoreName.My,
+            StoreLocation storeLocation = StoreLocation.CurrentUser)
         {
             var xml = sspRequest.ConvertToXml();
 
-            var signedData = await _cryptCP.SignDataAsync(
-                criterias: signCriterias,
-                data: xml,
-                directoryToSaveFiles,
-                fileName: "qcb_request.xml");
+            using (var fs = new FileStream(
+                path: Path.Combine(directoryToSaveFiles, "qcb_request.xml"),
+                FileMode.Create))
+                await fs.WriteAsync(Encoding.UTF8.GetBytes(xml));
+
+            var xmlData = Encoding.UTF8.GetBytes(xml);
+
+            var signedData = await _cryptoGostClient.SignMessageCMS(
+                message: xmlData,
+                thumbprint: thumbprint,
+                storeName,
+                storeLocation);
+
+            using (var fs = new FileStream(
+                path: Path.Combine(directoryToSaveFiles, "qcb_request.xml.p7s"),
+                FileMode.Create))
+                await fs.WriteAsync(signedData);
 
             var request = new RestRequest("dlrequest", Method.Post)
                 .AddBody(signedData, ContentType.Xml);
 
-            var response = await _client.GetResponseAsync(request);
+            var response = await _sspClient.GetResponseAsync(request);
 
-            var unsignedContent = await _cryptCP.VerifySignAsync(
-                criterias: verifySignCriterias,
-                data: response.RawBytes!,
-                directoryToSaveFiles,
-                fileName: "qcb_result.xml.p7s");
+            using (var fs = new FileStream(
+                path: Path.Combine(directoryToSaveFiles, "qcb_result.xml.p7s"),
+                FileMode.Create))
+                await fs.WriteAsync(response.RawBytes);
+
+            var unsignedContent = await _cryptoGostClient.VerifySignCMS(response.RawBytes!);
+
+            using (var fs = new FileStream(
+                path: Path.Combine(directoryToSaveFiles, "qcb_result.xml"),
+                FileMode.Create))
+                await fs.WriteAsync(unsignedContent);
 
             var requestResult = Encoding.Default
                 .GetString(unsignedContent)
