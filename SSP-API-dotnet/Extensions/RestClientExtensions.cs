@@ -11,10 +11,16 @@ namespace SSP_API.Extensions
             var response = await client.ExecuteAsync(request);
 
             if (!response.IsSuccessStatusCode)
-                throw new HttpRequestException();
-
-            if (response.Content is null)
-                throw new ArgumentNullException(nameof(response.Content));
+            {
+                if (response.RawBytes is not null)
+                    return response;
+                else if (response.Content is not null)
+                    return response;
+                else
+                    throw new ArgumentNullException(
+                        paramName: nameof(response.Content),
+                        message: $"Ответ неуспешен ({response.StatusCode})");
+            }
 
             return response;
         }
