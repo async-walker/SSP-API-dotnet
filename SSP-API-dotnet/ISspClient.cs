@@ -14,16 +14,12 @@ namespace SSP_API
         /// </summary>
         /// <param name="sspRequest">Запрос с запрашиваемыми данными на поиск СПП</param>
         /// <param name="directoryToSaveFiles">Директория сохранения файлов, необходимых и получаемых при обмене с бюро</param>
-        /// <param name="thumbprint">Отпечаток сертификата для подписи</param>
-        /// <param name="storeName">Наименование хранилища сертификата</param>
-        /// <param name="storeLocation">Расположение хранилища сертификата</param>
+        /// <param name="signerSubjectName">Имя субъекта сертификата подписанта</param>
         /// <returns>Экземпляр <see cref="RequestResult"/> с результатом запроса</returns>
         Task<RequestResult> SendRequestAsync(
             SspRequest sspRequest, 
             string directoryToSaveFiles,
-            string thumbprint,
-            StoreName storeName = StoreName.My,
-            StoreLocation storeLocation = StoreLocation.CurrentUser);
+            string signerSubjectName);
         /// <summary>
         /// Получение отчёта
         /// </summary>
