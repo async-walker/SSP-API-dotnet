@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text;
 
 namespace SSP_API.Helpers
 {
@@ -30,6 +31,8 @@ namespace SSP_API.Helpers
         {
             var processInfo = new ProcessStartInfo()
             {
+                StandardErrorEncoding = Encoding.GetEncoding(866),
+                StandardOutputEncoding = Encoding.GetEncoding(866),
                 UseShellExecute = false,
                 FileName = "cmd.exe",
                 Arguments = $"/c {cmd}",
@@ -50,9 +53,8 @@ namespace SSP_API.Helpers
 
             while (!process.StandardOutput.EndOfStream)
             {
-                var output = process.StandardOutput.ReadToEnd();
-
-                log += output;
+                log += process.StandardOutput.ReadToEnd();
+                log += process.StandardError.ReadToEnd();
             }
 
             process.WaitForExit();
