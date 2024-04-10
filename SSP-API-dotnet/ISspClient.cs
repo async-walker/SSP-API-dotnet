@@ -1,6 +1,4 @@
-﻿using CryptoPro.Adapter.CryptCP.Types;
-using SSP_API.Types.Xsd;
-using System.Security.Cryptography.X509Certificates;
+﻿using SSP_API.Types.Xsd;
 
 namespace SSP_API
 {

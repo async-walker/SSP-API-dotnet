@@ -1,7 +1,9 @@
-﻿using RestSharp;
+﻿using GostCryptography.Client;
+using RestSharp;
 using SSP_API.Extensions;
 using SSP_API.Helpers;
 using SSP_API.Types.Xsd;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace SSP_API
@@ -11,15 +13,15 @@ namespace SSP_API
     /// </summary>
     public class SspClient : ISspClient, IDisposable
     {
+        private readonly IGostCryptographyClient _gostCryptographyClient;
         private readonly RestClient _sspClient;
-        private readonly string _gostCryptographyExe;
-
+        
         /// <summary>
         /// Инициализация экземпляра <see cref="SspClient"/>
         /// </summary>
         /// <param name="options">Экземпляр <see cref="SspClientOptions"/> с настройками клиента</param>
-        /// <param name="gostCryptographyExe">Путь к исполняемому файлу GostCryptography</param>
-        public SspClient(SspClientOptions options, string gostCryptographyExe)
+        /// <param name="gostCryptographyAPI">Адрес REST сервиса</param>
+        public SspClient(SspClientOptions options, string gostCryptographyAPI)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
@@ -30,7 +32,8 @@ namespace SSP_API
             };
 
             _sspClient = new RestClient(restOptions);
-            _gostCryptographyExe = gostCryptographyExe;
+            _gostCryptographyClient = new GostCryptographyClient(
+                new GostCryptographyOptions(gostCryptographyAPI));
         }
 
         /// <inheritdoc/>
@@ -57,11 +60,15 @@ namespace SSP_API
                 FileMode.Create))
                 await fs.WriteAsync(signedMessage);
 
-            var unsignedMessagePath = GostCryptographyHelper.VerifyMessage(
-                exe: _gostCryptographyExe,
-                inMessagePath: responseAnswerPath);
+            var unsignedMessage = await _gostCryptographyClient.VerifySignCMS(
+                message: signedMessage);
 
-            var unsignedMessage = File.ReadAllBytes(unsignedMessagePath);
+            var unsignedMessagePath = Path.Combine(directoryToSaveFiles, "qcb_answer.xml");
+
+            using (var fs = new FileStream(
+                path: unsignedMessagePath,
+                FileMode.Create))
+                await fs.WriteAsync(unsignedMessage);
 
             var sspInfo = Encoding.Default
                 .GetString(unsignedMessage)
@@ -85,15 +92,19 @@ namespace SSP_API
                 FileMode.Create))
                 await fs.WriteAsync(Encoding.UTF8.GetBytes(xml));
 
-            var signedMessagePath = GostCryptographyHelper.SignMessage(
-                exe: _gostCryptographyExe,
-                subjectName: signerSubjectName,
-                inMessagePath: requestMessagePath);
+            var signedMessage = await _gostCryptographyClient.SignMessageCMS(
+                message: Encoding.UTF8.GetBytes(xml),
+                signerSubjectName,
+                StoreLocation.CurrentUser,
+                StoreName.My);
 
-            var signedData = File.ReadAllBytes(signedMessagePath);
+            using (var fs = new FileStream(
+                path: Path.Combine(directoryToSaveFiles, "qcb_request.xml.p7s"),
+                FileMode.Create))
+                await fs.WriteAsync(signedMessage);
 
             var request = new RestRequest("dlrequest", Method.Post)
-                .AddBody(signedData, ContentType.Xml);
+                    .AddBody(signedMessage, ContentType.Xml);
 
             var response = await _sspClient.GetResponseAsync(request);
 
@@ -104,14 +115,11 @@ namespace SSP_API
                 FileMode.Create))
                 await fs.WriteAsync(response.RawBytes);
 
-            var unsignedMessagePath = GostCryptographyHelper.VerifyMessage(
-                exe: _gostCryptographyExe,
-                inMessagePath: responseAnswerPath);
-
-            var unsignedData = File.ReadAllBytes(unsignedMessagePath);
+            var unsignedMessage = await _gostCryptographyClient.VerifySignCMS(
+                message: response.RawBytes!);
 
             var requestResult = Encoding.Default
-                .GetString(unsignedData)
+                .GetString(unsignedMessage)
                 .DeserializeXml<RequestResult>();
 
             return requestResult;
