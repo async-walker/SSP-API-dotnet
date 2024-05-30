@@ -1,7 +1,6 @@
 ﻿using GostCryptography.Client;
 using RestSharp;
 using SSP_API.Extensions;
-using SSP_API.Helpers;
 using SSP_API.Types.Xsd;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -14,7 +13,7 @@ namespace SSP_API
     public class SspClient : ISspClient, IDisposable
     {
         private readonly IGostCryptographyClient _gostCryptographyClient;
-        private readonly RestClient _sspClient;
+        private readonly IRestClient _sspClient;
         
         /// <summary>
         /// Инициализация экземпляра <see cref="SspClient"/>
@@ -94,9 +93,10 @@ namespace SSP_API
 
             var signedMessage = await _gostCryptographyClient.SignMessageCMS(
                 message: Encoding.UTF8.GetBytes(xml),
-                signerSubjectName,
+                X509FindType.FindBySubjectName,
                 StoreLocation.CurrentUser,
-                StoreName.My);
+                StoreName.My,
+                findValue: signerSubjectName);
 
             using (var fs = new FileStream(
                 path: Path.Combine(directoryToSaveFiles, "qcb_request.xml.p7s"),
@@ -105,7 +105,7 @@ namespace SSP_API
 
             var request = new RestRequest("dlrequest", Method.Post)
                     .AddBody(signedMessage, ContentType.Xml);
-
+            
             var response = await _sspClient.GetResponseAsync(request);
 
             var responseAnswerPath = Path.Combine(directoryToSaveFiles, "qcb_result.xml.p7s");
@@ -117,6 +117,11 @@ namespace SSP_API
 
             var unsignedMessage = await _gostCryptographyClient.VerifySignCMS(
                 message: response.RawBytes!);
+            
+            using (var fs = new FileStream(
+                path: Path.Combine(directoryToSaveFiles, "qcb_result.xml"),
+                FileMode.Create))
+                await fs.WriteAsync(unsignedMessage);
 
             var requestResult = Encoding.Default
                 .GetString(unsignedMessage)
