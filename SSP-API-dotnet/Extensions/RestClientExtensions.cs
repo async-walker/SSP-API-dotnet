@@ -6,7 +6,7 @@ namespace SSP_API.Extensions
     internal static class RestClientExtensions
     {
         public static async Task<RestResponse> GetResponseAsync(
-            this RestClient client, 
+            this IRestClient client, 
             RestRequest request)
         {
             var response = await client.ExecuteAsync(request);
